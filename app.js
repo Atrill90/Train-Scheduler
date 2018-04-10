@@ -25,6 +25,7 @@ $(document).ready(function () {
         console.log(trainDest);
         console.log(trainTime);
         console.log(nextTrain);
+        
         database.ref().push({
 
             name: trainName,
@@ -42,19 +43,33 @@ $(document).ready(function () {
         let trainDestHolder = $("<td>");
         let trainTimeHolder = $("<td>");
         let nextTrainHolder = $("<td>");
-
-        newTRow.append(trainHolder, trainDestHolder, trainTimeHolder, nextTrainHolder,);
+        let nextArr = $("<td>");
+        newTRow.append(trainHolder, trainDestHolder, trainTimeHolder, nextTrainHolder,nextArr);
         $("#stats").append(newTRow);
 
-        let trainName = "";
-        let trainRole = "";
-        let trainSD = "";
-        let nextTrain = "";
+        let trainName = childSnapshot.val().name;
+        let trainDest = childSnapshot.val().destination;
+        let trainFD = childSnapshot.val().firstDeparture;
+        let trainFreq = parseInt(childSnapshot.val().nextTrain);
+        let trainFDMinutes = moment(trainFD,"hh/mm");
+        let timeDiff = moment().diff(trainFDMinutes, "minutes")
+        let nextArrival = timeDiff%trainFreq;
+        console.log(nextArrival); 
 
-
-        $(trainHolder).html(childSnapshot.val().name);
-        $(trainDestHolder).html(childSnapshot.val().destination);
-        $(trainTimeHolder).html(childSnapshot.val().firstDeparture);
-        $(nextTrainHolder).html(childSnapshot.val().nextTrain);
+        $(trainHolder).html(trainName);
+        $(trainDestHolder).html(trainDest);
+        $(trainTimeHolder).html(trainFD);
+        $(nextTrainHolder).html(trainFreq);
+        $(nextArr).html(nextArrival);
     });
+   
+    
 });
+
+
+
+
+
+
+
+//Starting time >>>>> Compare it to the currrent time >>>>>> 
