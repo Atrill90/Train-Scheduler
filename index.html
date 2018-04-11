@@ -9,23 +9,26 @@
         crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/BatFont.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Train Scheduler</title>
 </head>
 
 <body>
     <div class="jumbotron">
         <div class="container">
-            <h1>Trains, Trains, Trains!</h1>
-            <p>If you like trains, you are gonna love this website</p>
+            <h1>Gotham City Train Scheduler</h1>
+            <p id= "jumbotext">Don't leave your children unnattended, and never trust the man in the bat costume</p>
             <p>
                 <i class="fas fa-train fa-5x mr-3"></i>
 
-                <i class="fas fa-train fa-5x mr-3"></i>
+                <i class ="fas fa-train fa-5x mr-3"></i>
 
                 <i class="fas fa-train fa-5x mr-3"></i>
 
             </p>
+            <hr>
+            <img class ="img-fluid mr-3" src="images/batsymbol.jpg" height="300px" width="300px" alt="batsymbol">
         </div>
     </div>
     <div class="container">
@@ -38,6 +41,7 @@
                         <th scope="col">Depart Time</th>
                         <th scope="col">Frequency</th>
                         <th scope="col">Next Train</th>
+                        <th scope="col">Next Train Time</th>
                     </tr>
                 </thead>
                 <tbody id="stats">

@@ -21,10 +21,6 @@ $(document).ready(function () {
         trainDest = $("#destinationInput").val().trim();
         trainTime = $("#timeInput").val().trim();
         nextTrain = $("#frequencyInput").val().trim();
-        console.log(trainName);
-        console.log(trainDest);
-        console.log(trainTime);
-        console.log(nextTrain);
         
         database.ref().push({
 
@@ -33,8 +29,10 @@ $(document).ready(function () {
             firstDeparture: trainTime,
             nextTrain: nextTrain,
         });
-
-
+        $("#nameInput").val("");
+        $("#destinationInput").val("");
+        $("#timeInput").val("");
+        $("#frequencyInput").val("");
     });
 
     database.ref().on("child_added", function (childSnapshot, ) {
@@ -44,7 +42,9 @@ $(document).ready(function () {
         let trainTimeHolder = $("<td>");
         let nextTrainHolder = $("<td>");
         let nextArr = $("<td>");
-        newTRow.append(trainHolder, trainDestHolder, trainTimeHolder, nextTrainHolder,nextArr);
+        let nextTrainT = $("<td>");
+        
+        newTRow.append(trainHolder, trainDestHolder, trainTimeHolder, nextTrainHolder,nextArr,nextTrainT);
         $("#stats").append(newTRow);
 
         let trainName = childSnapshot.val().name;
@@ -52,15 +52,19 @@ $(document).ready(function () {
         let trainFD = childSnapshot.val().firstDeparture;
         let trainFreq = parseInt(childSnapshot.val().nextTrain);
         let trainFDMinutes = moment(trainFD,"hh/mm");
-        let timeDiff = moment().diff(trainFDMinutes, "minutes")
-        let nextArrival = timeDiff%trainFreq;
-        console.log(nextArrival); 
+        let timeDiff = moment().diff(trainFDMinutes, "minutes");
+        let remainder = Math.abs(timeDiff%trainFreq);
+        let tMinutesTillTrain = trainFreq - remainder;
+        let nextTrainTimeMin = moment().add(tMinutesTillTrain,"minutes").format("hh:mm");
+
+       
 
         $(trainHolder).html(trainName);
         $(trainDestHolder).html(trainDest);
         $(trainTimeHolder).html(trainFD);
-        $(nextTrainHolder).html(trainFreq);
-        $(nextArr).html(nextArrival);
+        $(nextTrainHolder).html(trainFreq + " minutes");
+        $(nextArr).html(tMinutesTillTrain + " minutes");
+        $(nextTrainT).html(nextTrainTimeMin)
     });
    
     
